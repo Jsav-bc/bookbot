@@ -1,3 +1,4 @@
+from sys import argv
 def get_book_text(file_path):
     with open(file_path) as f:
         content = f.read()
@@ -5,7 +6,7 @@ def get_book_text(file_path):
     return content
 
 def get_word_count():
-    content = get_book_text("books/frankenstein.txt")
+    content = get_book_text(argv[1])
     w_c = 0
     w_list = content.split()
     for w in w_list:
@@ -16,7 +17,7 @@ def get_word_count():
 def get_char_count():
     char_d = {}
     c_c = 0
-    content = get_book_text("books/frankenstein.txt")
+    content = get_book_text(argv[1])
     content = content.lower()
 
     for c in content:
@@ -25,13 +26,23 @@ def get_char_count():
         else:
             char_d[c] += 1
     
-    char_d.sort(key=c, reverse = True)
     return char_d
 
+def report_struct(char_d):
+    return {k: v for k, v in sorted(char_d.items(), key=lambda item: item[1],reverse=True)}
+
 def report():
+    ww = get_word_count()
+    wc = get_char_count()
+    cc = report_struct(wc)
     print("============ BOOKBOT ============")
-    print("Analyzing book found at books/frankenstein.txt...")
+    print(f"Analyzing book found at {argv[1]}...")
     print("----------- Word Count ----------")
-    print(f"Found {get_word_count()} total words")
+    print(f"Found {ww} total words")
     print("--------- Character Count -------")
-    sort
+    for c in cc:
+        if c.isalpha():
+            print(f"{c}: {cc[c]}")
+        else:
+            pass
+    print("============= END ===============")
